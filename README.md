@@ -18,5 +18,19 @@ My reason for installing Gitlab is to learn how to write yaml, infrastructure as
 - for intiial set up you will need to access the password for the web ui which is in the etc/gitlab files.
 - the username is root
 - To access the password you can run this command: docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
-- This file is automatically deleted after 24 hours, so on first sign in, you should change the credentials. 
+- This file is automatically deleted after 24 hours, so on first sign in, you should change the credentials.
+
+## Step 5: Configure Gitlab
+- Next you can add accounts for access, and change the settings how you would like.
+- I would add a ssh key for pushing to gitlab. You can add the public key by clicking on your account/preferences/access/ssh_keys
+- Then you can copy the public key.
+
+## Step 6: Test project
+- You can create a test project and try pushing some code or text to Gitlab to make sure it works.
+- In root of the test project file you can run: git init, this will initialize the repo
+- Then type some text or code in a file and run from the command line: git add <your_file_name>
+- Next you can commit the change: git commit -m "explain the commit"
+- Add a remote origin to the repo so it can connect to Gitlab, there are two ways to do this, but I usually make the repo in Gitlab, uncheck readme, and use the given url or ssh line under clone wiht http or ssh.
+- In the command line run: git remote add origin <the_cloned_line>
+- Finally push the changes and see if the code is in Gitlab: git push origin main, it will either be main or master depending on what the branch is called. 
 
