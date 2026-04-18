@@ -18,5 +18,5 @@ My reason for installing Gitlab is to learn how to write yaml, infrastructure as
 - for intiial set up you will need to access the password for the web ui which is in the etc/gitlab files.
 - the username is root
 - To access the password you can run this command: docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
-- This file is automatically deleted after 24 hours, so on first sign it, you should change the credentials. 
+- This file is automatically deleted after 24 hours, so on first sign in, you should change the credentials. 
 
