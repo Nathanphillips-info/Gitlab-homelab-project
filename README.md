@@ -1,36 +1,112 @@
-# Gitlab-homelab-project
-Documentation of GitLab Installation and set up in a docker container. 
+# GitLab Homelab Project
 
-My reason for installing Gitlab is to learn how to write yaml, infrastructure as code, and utilize Gitlab runners for automation. It will be the source of truth for my homelab containing all the compose files for my containers. From there I can write a compose on my personal device, push it to Gitlab, pull it down on the server and run it. Because of Git, I can look at and keep a log of changes through previous commits. 
+## Overview
+This project documents the deployment of GitLab in a Docker environment as part of my homelab.
 
-## Step 1: preparing volumes
-- On my server I set up three files to attach to the Gitlab container, config, logs, and data.
+The goal is to:
+- Learn infrastructure as code and YAML configuration
+- Manage services using Docker Compose
+- Use GitLab as a central source of truth for homelab configurations
+- Explore CI/CD and automation with GitLab Runners
+
+This setup allows me to write configurations locally, push them to GitLab, and deploy them on my server.
+
+---
+
+## Technologies Used
+- Docker / Docker Compose
+- GitLab CE
+- (In progress) Traefik for reverse proxy
+
+---
+
+## Step 1: Preparing Volumes
+Created persistent directories on the host system to store GitLab data:
+
+- config → `/etc/gitlab`
+- logs → `/var/log/gitlab`
+- data → `/var/opt/gitlab`
+
+These volumes ensure data persists across container restarts.
+
+---
 
 ## Step 2: Preparing Docker
-- I ran into some issues making sure I could use docker compose on my server, and that it was the right version. I had to remove and download docker again to make sure I had the right version of docker compose.
+Verified Docker and Docker Compose were properly installed.
+
+- Encountered version issues with Docker Compose
+- Reinstalled Docker to ensure compatibility with Compose
+
+---
+
+## Step 3: Writing the Docker Compose File
+Created a Docker Compose configuration to deploy GitLab.
+
+- Defined volumes for persistent storage
+- Configured networking for container communication
+- Set GitLab external URL
+
+Deployed the container:
+
+```bash
+docker compose up -d
+```
 
 ## Step 3: Writing the Yaml
 - I am still learning how to write yaml files, so I had some help from AI preparing the yaml.
 - Once it was prepared and the volumes and networking were correct, I ran docker compose up -d
 - I am still getting Traefik set up so I have nice domain names for my self hosted services, so I connected through the socket.
 
-## Step 4: Connecting to the web UI and setting up your account. 
-- for intiial set up you will need to access the password for the web ui which is in the etc/gitlab files.
-- the username is root
-- To access the password you can run this command: docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
-- This file is automatically deleted after 24 hours, so on first sign in, you should change the credentials.
+## Step 4: Initial Login
 
-## Step 5: Configure Gitlab
-- Next you can add accounts for access, and change the settings how you would like.
-- I would add a ssh key for pushing to gitlab. You can add the public key by clicking on your account/preferences/access/ssh_keys
-- Then you can copy the public key.
+GitLab generates a temporary root password on first startup.
 
-## Step 6: Test project
-- You can create a test project and try pushing some code or text to Gitlab to make sure it works.
-- In root of the test project file you can run: git init, this will initialize the repo
-- Then type some text or code in a file and run from the command line: git add <your_file_name>
-- Next you can commit the change: git commit -m "explain the commit"
-- Add a remote origin to the repo so it can connect to Gitlab, there are two ways to do this, but I usually make the repo in Gitlab, uncheck readme, and use the given url or ssh line under clone wiht http or ssh.
-- In the command line run: git remote add origin <the_cloned_line>
-- Finally push the changes and see if the code is in Gitlab: git push origin main, it will either be main or master depending on what the branch is called. 
+Username: root
+Retrieve password:
+docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
 
+This file is automatically deleted after 24 hours.
+It is recommended to change the password immediately after first login.
+
+## Step 5: Configure GitLab
+Created user accounts
+Adjusted settings as needed
+Added SSH key for authentication
+
+To add an SSH key:
+
+Navigate to: User Settings / Preferences / Access / SSH Keys
+Paste your public key
+Step 6: Test Repository
+
+Created a test repository to verify functionality.
+
+Initialize repository:
+
+git init
+
+Add a file:
+
+git add <file_name>
+
+Commit changes:
+
+git commit -m "initial commit"
+
+Add remote origin:
+
+git remote add origin <repository_url>
+
+Push to GitLab:
+
+git push origin main
+
+---
+
+### Notes
+GitLab is resource-intensive and benefits from sufficient RAM and storage
+Reverse proxy (Traefik) integration is planned for cleaner domain-based access
+Future Improvements
+Configure Traefik for HTTPS and domain routing
+Integrate GitLab Runners for CI/CD pipelines
+Expand automation using GitLab pipelines
