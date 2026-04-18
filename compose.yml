@@ -1,0 +1,31 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    restart: unless-stopped
+
+    hostname: ${GITLAB_HOST}
+
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://${GITLAB_HOST}'
+        nginx['listen_port'] = 80
+        nginx['listen_https'] = false
+
+    volumes:
+      - ./data/gitlab/config:/etc/gitlab
+      - ./data/gitlab/logs:/var/log/gitlab
+      - ./data/gitlab/data:/var/opt/gitlab
+
+    networks:
+      - web
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.gitlab.rule=Host(`${GITLAB_HOST}`)"
+      - "traefik.http.routers.gitlab.entrypoints=web"
+      - "traefik.http.services.gitlab.loadbalancer.server.port=80"
+
+networks:
+  web:
+    external: true
