@@ -10,5 +10,13 @@ My reason for installing Gitlab is to learn how to write yaml, infrastructure as
 - I ran into some issues making sure I could use docker compose on my server, and that it was the right version. I had to remove and download docker again to make sure I had the right version of docker compose.
 
 ## Step 3: Writing the Yaml
-- I am still learning how to write yaml files, so I had some help from AI preparing the yaml. 
+- I am still learning how to write yaml files, so I had some help from AI preparing the yaml.
+- Once it was prepared and the volumes and networking were correct, I ran docker compose up -d
+- I am still getting Traefik set up so I have nice domain names for my self hosted services, so I connected through the socket.
+
+## Step 4: Connecting to the web UI and setting up your account. 
+- for intiial set up you will need to access the password for the web ui which is in the etc/gitlab files.
+- the username is root
+- To access the password you can run this command: docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
+- This file is automatically deleted after 24 hours, so on first sign it, you should change the credentials. 
 
