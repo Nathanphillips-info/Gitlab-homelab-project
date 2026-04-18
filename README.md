@@ -42,7 +42,7 @@ Verified Docker and Docker Compose were properly installed.
 ## Step 3: Writing the Docker Compose File
 Created a Docker Compose configuration to deploy GitLab.
 
-- Defined volumes for persistent storage
+- Defined volumes for storage
 - Configured networking for container communication
 - Set GitLab external URL
 
@@ -51,11 +51,6 @@ Deployed the container:
 ```bash
 docker compose up -d
 ```
-
-## Step 3: Writing the Yaml
-- I am still learning how to write yaml files, so I had some help from AI preparing the yaml.
-- Once it was prepared and the volumes and networking were correct, I ran docker compose up -d
-- I am still getting Traefik set up so I have nice domain names for my self hosted services, so I connected through the socket.
 
 ## Step 4: Initial Login
 
