@@ -72,7 +72,8 @@ To add an SSH key:
 
 Navigate to: User Settings / Preferences / Access / SSH Keys
 Paste your public key
-Step 6: Test Repository
+
+## Step 6: Test Repository
 
 Created a test repository to verify functionality.
 
@@ -94,7 +95,7 @@ git remote add origin <repository_url>
 
 Push to GitLab:
 
-git push origin main
+git push origin main / master
 
 ---
 
